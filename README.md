@@ -25,3 +25,14 @@ g++ main.cpp File.cpp Folder.cpp FileSystem.cpp -o MiniFileSystem
 ```
 
 The program loads the starting folder tree from `filesystem.txt`.
+
+## Features Included
+
+- Create folders and files with duplicate checking
+- Display the current folder
+- Display the full folder tree using recursion
+- Search for files using recursion
+- Enter folders and go back to parent folders
+- Delete files and folders
+- Show the current path
+- Handle invalid operations with exceptions

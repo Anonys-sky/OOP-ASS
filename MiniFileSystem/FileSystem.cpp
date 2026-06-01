@@ -45,6 +45,7 @@ vector<string> FileSystem::splitPath(string path) const
     vector<string> parts;
     string currentPart = "";
 
+    // Example: Root/Courses/OOP becomes Root, Courses, and OOP.
     for (size_t i = 0; i < path.length(); i++)
     {
         if (path[i] == '/')
@@ -73,6 +74,7 @@ void FileSystem::splitFileName(string completeName, string& fileName, string& ex
 {
     int dotPosition = -1;
 
+    // Search from the end so a name like my.report.txt uses the last dot.
     for (int i = static_cast<int>(completeName.length()) - 1; i >= 0; i--)
     {
         if (completeName[i] == '.')
@@ -100,6 +102,7 @@ Folder* FileSystem::getOrCreateFolder(vector<string> parts, int lastFolderIndex)
 
     Folder* folder = root;
 
+    // Walk through the path one folder at a time and create missing folders.
     for (int i = 1; i <= lastFolderIndex; i++)
     {
         Folder* nextFolder = folder->findSubfolder(parts[i]);
@@ -166,6 +169,7 @@ void FileSystem::loadFromFile(string fileName)
 
     while (inputFile >> type)
     {
+        // Each line starts with either FOLDER or FILE.
         if (type == "FOLDER")
         {
             inputFile >> path;
@@ -176,6 +180,7 @@ void FileSystem::loadFromFile(string fileName)
             string restOfLine;
             inputFile >> path;
             getline(inputFile, restOfLine);
+            // Some file lines use "report txt" and others use "notes.pdf".
             loadFilePath(path, trim(restOfLine));
         }
         else
@@ -237,6 +242,7 @@ void FileSystem::run()
     {
         try
         {
+            // Keep menu operations in one try block so invalid actions do not crash.
             showMenu();
             choice = getMenuChoice();
 

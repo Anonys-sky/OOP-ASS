@@ -38,6 +38,7 @@ string Folder::getPath() const
         return name;
     }
 
+    // Ask the parent for its path first, then add this folder's name.
     return parent->getPath() + "/" + name;
 }
 
@@ -79,6 +80,7 @@ Folder* Folder::addFolder(string folderName)
         throw runtime_error("A folder with this name already exists here.");
     }
 
+    // Folders are created with new because the assignment requires dynamic allocation.
     Folder* newFolder = new Folder(folderName, this);
     subfolders.push_back(newFolder);
 
@@ -140,6 +142,7 @@ void Folder::displayCurrentFolder() const
 
 void Folder::displayTree(int level) const
 {
+    // The level controls indentation, so child folders appear farther to the right.
     for (int i = 0; i < level; i++)
     {
         cout << "  ";
@@ -157,6 +160,7 @@ void Folder::displayTree(int level) const
 
     for (size_t i = 0; i < subfolders.size(); i++)
     {
+        // Recursive call: each child folder displays its own files and children.
         subfolders[i]->displayTree(level + 1);
     }
 }
@@ -176,6 +180,7 @@ int Folder::searchFile(string fileName) const
 
     for (size_t i = 0; i < subfolders.size(); i++)
     {
+        // Recursive call: search the whole tree, not only the current folder.
         matches += subfolders[i]->searchFile(fileName);
     }
 
@@ -202,6 +207,7 @@ void Folder::deleteFolder(string folderName)
     {
         if (subfolders[i]->getName() == folderName)
         {
+            // delete calls the folder destructor, which also deletes all child folders.
             delete subfolders[i];
             subfolders.erase(subfolders.begin() + i);
             return;
